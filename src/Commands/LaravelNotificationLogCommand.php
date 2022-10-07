@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Teamnovu\LaravelNotificationLog\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelNotificationLogCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-notification-log';
 
     public $description = 'My command';
 
