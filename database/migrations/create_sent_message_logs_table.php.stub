@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('sent_message_logs', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('message_id');
+            $table->json('mailable')->nullable();
+            $table->boolean('queued')->default(false);
+            $table->json('to')->nullable();
+            $table->json('cc')->nullable();
+            $table->json('bcc')->nullable();
+            $table->json('reply_to')->nullable();
+            $table->json('sender')->nullable();
+            $table->json('headers')->nullable();
+            $table->string('subject')->nullable();
+            $table->longText('body')->nullable();
+            $table->dateTime('sent_at')->nullable();
+            $table->json('attachments')->nullable();
+
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('sent_message_logs');
+    }
+};
