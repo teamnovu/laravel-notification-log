@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^8.1",
+        "ext-zlib": "*",
         "spatie/laravel-package-tools": "^1.13.0",
         "illuminate/contracts": "^9.0"
     },
@@ -33,7 +34,10 @@
         "psr-4": {
             "Teamnovu\\LaravelNotificationLog\\": "src",
             "Teamnovu\\LaravelNotificationLog\\Database\\Factories\\": "database/factories"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

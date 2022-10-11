@@ -4,10 +4,12 @@ namespace Teamnovu\LaravelNotificationLog\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Teamnovu\LaravelNotificationLog\Concerns\CompressesBody;
 
 class SentMessageLog extends Model
 {
     use HasFactory;
+    use CompressesBody;
 
     protected $guarded = [];
 
