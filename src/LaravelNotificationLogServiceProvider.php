@@ -2,13 +2,13 @@
 
 namespace Teamnovu\LaravelNotificationLog;
 
-use App\Console\Commands\CompressAllMessages;
-use App\Console\Commands\DecompressAllMessages;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Event;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Teamnovu\LaravelNotificationLog\Commands\CompressAllMessages;
+use Teamnovu\LaravelNotificationLog\Commands\DecompressAllMessages;
 use Teamnovu\LaravelNotificationLog\Listeners\MessageEventListener;
 
 class LaravelNotificationLogServiceProvider extends PackageServiceProvider
