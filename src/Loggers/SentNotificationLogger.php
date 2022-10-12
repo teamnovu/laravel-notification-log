@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Notifications\Channels\DatabaseChannel;
+use Illuminate\Notifications\Channels\MailChannel;
 use Illuminate\Notifications\Events\NotificationSending;
 use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Notifications\Notification;
@@ -55,6 +56,11 @@ class SentNotificationLogger
 
         $channelManager = resolve(ChannelManager::class);
         $channel = $channelManager->driver($channel);
+
+        // we never want to save the mail message here, as it will be logged by the sent mail logger.
+        if ($channel instanceof MailChannel) {
+            return null;
+        }
 
         if ($channel instanceof \NotificationChannels\Telegram\TelegramChannel) {
             $message = $notification->toTelegram($notifiable);
