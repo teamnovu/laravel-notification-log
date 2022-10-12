@@ -33,7 +33,6 @@ class SentNotificationLogger
 
     public function logSentNotification(NotificationSent $event)
     {
-        ray($event);
         $notification = SentNotificationLog::updateOrCreate([
             'notification_id' => $event->notification->id,
         ], [
