@@ -15,6 +15,8 @@ class TestCase extends Orchestra
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Teamnovu\\LaravelNotificationLog\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+
+        $this->setupDatabase();
     }
 
     protected function getPackageProviders($app)
@@ -32,5 +34,23 @@ class TestCase extends Orchestra
         $migration = include __DIR__.'/../database/migrations/create_laravel-notification-log_table.php.stub';
         $migration->up();
         */
+    }
+
+    protected function setupDatabase(): void
+    {
+        config()->set('database.default', 'sqlite');
+        config()->set('database.connections.sqlite', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+
+        $sentMessageLogsTableMigration = require __DIR__.'/../database/migrations/create_sent_message_logs_table.php.stub';
+
+        $sentMessageLogsTableMigration->up();
+
+        $sentNotificationLogsTableMigration = require __DIR__.'/../database/migrations/create_sent_notification_logs_table.php.stub';
+
+        $sentNotificationLogsTableMigration->up();
     }
 }

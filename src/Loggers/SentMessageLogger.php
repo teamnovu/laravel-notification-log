@@ -1,6 +1,6 @@
 <?php
 
-namespace Teamnovu\LaravelNotificationLog\Factories;
+namespace Teamnovu\LaravelNotificationLog\Loggers;
 
 use Illuminate\Mail\Events\MessageSent;
 use Symfony\Component\Mime\Address;
@@ -9,26 +9,29 @@ use Symfony\Component\Mime\Part\AbstractPart;
 use Symfony\Component\Mime\Part\DataPart;
 use Teamnovu\LaravelNotificationLog\Models\SentMessageLog;
 
-class SentMessageFactory
+class SentMessageLogger
 {
-    public function createFromSentMessage(MessageSent $event)
+    public function logSentMessage(MessageSent $event)
     {
         $body = $event->message->getBody();
-        $message = SentMessageLog::make([
+        $message = SentMessageLog::updateOrCreate([
             'message_id' => $event->sent->getMessageId(),
-            'mailable' => $this->getMailable($event),
-            'queued' => $this->getQueuedStatus($event),
-            'to' => $this->listAddresses($event->message->getTo()),
-            'cc' => $this->listAddresses($event->message->getCc()),
-            'bcc' => $this->listAddresses($event->message->getBcc()),
-            'reply_to' => $this->listAddresses($event->message->getReplyTo()),
-            'sender' => $this->listAddresses([$event->message->getSender()]),
-            'headers' => $this->convertHeaders($event->message->getHeaders()),
-            'subject' => $event->message->getSubject(),
-            'body' => $body instanceof AbstractPart ? ($event->message->getHtmlBody() ?? $event->message->getTextBody()) : $body,
-            'sent_at' => $event->message->getDate(),
-            'attachments' => $this->listAttachments($event->message->getAttachments()),
-        ]);
+        ],
+            [
+
+                'mailable' => $this->getMailable($event),
+                'queued' => $this->getQueuedStatus($event),
+                'to' => $this->listAddresses($event->message->getTo()),
+                'cc' => $this->listAddresses($event->message->getCc()),
+                'bcc' => $this->listAddresses($event->message->getBcc()),
+                'reply_to' => $this->listAddresses($event->message->getReplyTo()),
+                'sender' => $this->listAddresses([$event->message->getSender()]),
+                'headers' => $this->convertHeaders($event->message->getHeaders()),
+                'subject' => $event->message->getSubject(),
+                'body' => $body instanceof AbstractPart ? ($event->message->getHtmlBody() ?? $event->message->getTextBody()) : $body,
+                'sent_at' => $event->message->getDate(),
+                'attachments' => $this->listAttachments($event->message->getAttachments()),
+            ]);
 
         return $message;
     }
