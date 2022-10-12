@@ -1,19 +1,11 @@
-# Logs every sent Notification and Mail of your entire Project.
+# Laravel Notification Log
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/teamnovu/laravel-notification-log.svg?style=flat-square)](https://packagist.org/packages/teamnovu/laravel-notification-log)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/teamnovu/laravel-notification-log/run-tests?label=tests)](https://github.com/teamnovu/laravel-notification-log/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/teamnovu/laravel-notification-log/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/teamnovu/laravel-notification-log/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/teamnovu/laravel-notification-log.svg?style=flat-square)](https://packagist.org/packages/teamnovu/laravel-notification-log)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-notification-log.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-notification-log)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+Logs every sent Notification and Mail of your entire Laravel Project.
 
 ## Installation
 
@@ -26,35 +18,39 @@ composer require teamnovu/laravel-notification-log
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-notification-log-migrations"
+php artisan vendor:publish --tag="notification-log-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-notification-log-config"
+php artisan vendor:publish --tag="notification-log-config"
 ```
 
-This is the contents of the published config file:
+The following config file will be published in config/notification-log.php:
 
 ```php
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Compress Messages
+    |--------------------------------------------------------------------------
+    |
+    | In case you send a lot of E-Mails the message_sent_logs table could become
+    | very big. With this option you can enable that the body of every log
+    | entry will be compressed with gzip to reduce its size.
+    |
+    */
+
+    'compress-messages' => env('NOTIFICATION_LOG_COMPRESS_MESSAGES', false),
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-notification-log-views"
 ```
 
 ## Usage
 
-```php
-$laravelNotificationLog = new Teamnovu\LaravelNotificationLog();
-echo $laravelNotificationLog->echoPhrase('Hello, Teamnovu!');
-```
+Just send a Notification or Mail as you would normally do. The package will automatically log the Notification or Mail.
 
 ## Testing
 
@@ -66,13 +62,10 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Contributing
+[//]: # (## Contributing)
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+[//]: # ()
+[//]: # (Please see [CONTRIBUTING]&#40;CONTRIBUTING.md&#41; for details.)
 
 ## Credits
 
