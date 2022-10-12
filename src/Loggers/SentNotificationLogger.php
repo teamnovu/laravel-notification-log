@@ -72,7 +72,6 @@ class SentNotificationLogger
             return null;
         }
 
-
         if ($channel instanceof \NotificationChannels\Telegram\TelegramChannel) {
             $message = $notification->toTelegram($notifiable);
             if (is_string($message)) {
@@ -87,7 +86,6 @@ class SentNotificationLogger
 
             return $message->toArray();
         }
-
 
         if ($channel instanceof DatabaseChannel) {
             if (method_exists($notification, 'toDatabase')) {
@@ -106,13 +104,13 @@ class SentNotificationLogger
     /**
      * Format the given notifiable into a tag.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return string
      */
     private function formatNotifiable($notifiable): string
     {
         if ($notifiable instanceof Model) {
-            return get_class($notifiable) . ':' . implode('_', Arr::wrap($notifiable->getKey()));
+            return get_class($notifiable).':'.implode('_', Arr::wrap($notifiable->getKey()));
         }
 
         if ($notifiable instanceof AnonymousNotifiable) {
@@ -120,7 +118,7 @@ class SentNotificationLogger
                 return is_array($route) ? implode(',', $route) : $route;
             }, $notifiable->routes);
 
-            return 'Anonymous:' . implode(',', $routes);
+            return 'Anonymous:'.implode(',', $routes);
         }
 
         return get_class($notifiable);
