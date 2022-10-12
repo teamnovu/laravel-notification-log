@@ -33,6 +33,7 @@ class SentNotificationLogger
 
     public function logSentNotification(NotificationSent $event)
     {
+        ray($event);
         $notification = SentNotificationLog::updateOrCreate([
             'notification_id' => $event->notification->id,
         ], [
@@ -40,7 +41,7 @@ class SentNotificationLogger
             'notifiable' => $this->formatNotifiable($event->notifiable),
             'queued' => in_array(ShouldQueue::class, class_implements($event->notification)),
             'channel' => $event->channel,
-            'response' => $event->response,
+            'response' => $this->formatResponse($event->response),
             'status' => 'sent',
         ]);
 
@@ -124,5 +125,18 @@ class SentNotificationLogger
         }
 
         return get_class($notifiable);
+    }
+
+    protected function formatResponse($response): mixed
+    {
+        if (is_string($response)) {
+            return $response;
+        }
+
+        if (method_exists($response, 'toArray')) {
+            return json_encode($response->toArray());
+        }
+
+        return json_encode($response);
     }
 }
