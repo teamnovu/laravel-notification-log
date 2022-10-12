@@ -49,11 +49,6 @@ class SentNotificationLogger
 
     public function resolveMessage(string $channel, Notification $notification, $notifiable)
     {
-        // TODO
-        if ($notifiable instanceof AnonymousNotifiable) {
-            return null;
-        }
-
         $channelManager = resolve(ChannelManager::class);
         $channel = $channelManager->driver($channel);
 
@@ -61,6 +56,22 @@ class SentNotificationLogger
         if ($channel instanceof MailChannel) {
             return null;
         }
+
+        // it the only channel anonymous notifiables are used
+        if ($channel instanceof \Illuminate\Notifications\Channels\VonageSmsChannel) {
+            $message = $notification->toVonage($notifiable);
+
+            if (is_string($message)) {
+                $message = new \Illuminate\Notifications\Messages\VonageMessage($message);
+            }
+
+            return $message->content;
+        }
+
+        if ($notifiable instanceof AnonymousNotifiable) {
+            return null;
+        }
+
 
         if ($channel instanceof \NotificationChannels\Telegram\TelegramChannel) {
             $message = $notification->toTelegram($notifiable);
@@ -77,15 +88,6 @@ class SentNotificationLogger
             return $message->toArray();
         }
 
-        if ($channel instanceof \Illuminate\Notifications\Channels\VonageSmsChannel) {
-            $message = $notification->toVonage($notifiable);
-
-            if (is_string($message)) {
-                $message = new \Illuminate\Notifications\Messages\VonageMessage($message);
-            }
-
-            return $message->content;
-        }
 
         if ($channel instanceof DatabaseChannel) {
             if (method_exists($notification, 'toDatabase')) {
@@ -104,13 +106,13 @@ class SentNotificationLogger
     /**
      * Format the given notifiable into a tag.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return string
      */
     private function formatNotifiable($notifiable): string
     {
         if ($notifiable instanceof Model) {
-            return get_class($notifiable).':'.implode('_', Arr::wrap($notifiable->getKey()));
+            return get_class($notifiable) . ':' . implode('_', Arr::wrap($notifiable->getKey()));
         }
 
         if ($notifiable instanceof AnonymousNotifiable) {
@@ -118,7 +120,7 @@ class SentNotificationLogger
                 return is_array($route) ? implode(',', $route) : $route;
             }, $notifiable->routes);
 
-            return 'Anonymous:'.implode(',', $routes);
+            return 'Anonymous:' . implode(',', $routes);
         }
 
         return get_class($notifiable);
