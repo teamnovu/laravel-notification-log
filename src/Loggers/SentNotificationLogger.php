@@ -130,7 +130,7 @@ class SentNotificationLogger
             return $response;
         }
 
-        if (method_exists($response, 'toArray')) {
+        if (is_object($response) && method_exists($response, 'toArray')) {
             return json_encode($response->toArray());
         }
 
