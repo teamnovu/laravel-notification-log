@@ -35,11 +35,11 @@ class SentNotificationLogger
     {
         $notification = SentNotificationLog::updateOrCreate([
             'notification_id' => $event->notification->id,
+            'channel' => $event->channel,
         ], [
             'notification' => get_class($event->notification),
             'notifiable' => $this->formatNotifiable($event->notifiable),
             'queued' => in_array(ShouldQueue::class, class_implements($event->notification)),
-            'channel' => $event->channel,
             'response' => $this->formatResponse($event->response),
             'status' => 'sent',
         ]);
