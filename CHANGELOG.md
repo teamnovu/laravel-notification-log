@@ -2,6 +2,26 @@
 
 All notable changes to `laravel-notification-log` will be documented in this file.
 
+## v1.3.0 - 2022-10-17
+
+### Breaking Change
+
+You now need to apply the following Interface and Trait so a Notification can be logged:
+
+```php
+use Teamnovu\LaravelNotificationLog\Concerns\LogNotification;
+use Teamnovu\LaravelNotificationLog\Contracts\ShouldLogNotification;
+
+class DummyNotification extends Notification implements ShouldLogNotification
+{
+    use LogNotification;
+
+   // ...
+}
+
+```
+**Full Changelog**: https://github.com/teamnovu/laravel-notification-log/compare/v1.2.0...v1.3.0
+
 ## v1.2.0 - 2022-10-17
 
 ### What's Changed
