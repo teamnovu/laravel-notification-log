@@ -17,9 +17,8 @@ return new class extends Migration {
             $table->string('channel')->nullable();
             $table->text('response')->nullable();
             $table->json('message')->nullable();
-
             $table->string('status')->nullable();
-
+            $table->integer('attempt')->default(1);
             $table->timestamps();
         });
     }

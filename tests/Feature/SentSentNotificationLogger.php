@@ -25,6 +25,7 @@ it('can log a sending notification event', function () {
     expect($log->channel)->toBe('database');
     expect($log->message)->toBe(['message' => 'Consectetur culpa ex aliquip ex anim.']);
     expect($log->status)->toBe('sending');
+    expect($log->attempt)->toBe(1);
 });
 
 it('can log a sending notification without message when disabled', function () {
@@ -42,6 +43,7 @@ it('can log a sending notification without message when disabled', function () {
     expect($log->channel)->toBe('database');
     expect($log->message)->toBe(null);
     expect($log->status)->toBe('sending');
+    expect($log->attempt)->toBe(1);
 });
 
 it('can update a notification once it is sent', function () {
@@ -64,6 +66,7 @@ it('can update a notification once it is sent', function () {
         'message' => json_encode(['message' => 'Consectetur culpa ex aliquip ex anim.']),
         'response' => 'dummy response',
         'status' => 'sent',
+        'attempt' => 1,
     ]);
 });
 
@@ -86,5 +89,6 @@ it('can log a failed notification', function () {
         'message' => null,
         'status' => 'error',
         'response' => $e,
+        'attempt' => 1,
     ]);
 });

@@ -12,13 +12,20 @@ use Illuminate\Notifications\Events\NotificationSending;
 use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
+use Teamnovu\LaravelNotificationLog\Contracts\ShouldLogNotification;
 use Teamnovu\LaravelNotificationLog\Models\SentNotificationLog;
 use Teamnovu\LaravelNotificationLog\NotificationFailed;
 
 class SentNotificationLogger
 {
-    public function logSendingNotification(NotificationSending $event): SentNotificationLog
+    public function logSendingNotification(NotificationSending $event): ?SentNotificationLog
     {
+        if (! $event->notification instanceof ShouldLogNotification) {
+            return null;
+        }
+
+        $event->notification::$attempt += 1;
+
         /** @var SentNotificationLog $notification */
         $notification = SentNotificationLog::create([
             'notification_id' => $event->notification->id,
@@ -28,17 +35,23 @@ class SentNotificationLogger
             'channel' => $event->channel,
             'message' => $this->resolveMessage($event->channel, $event->notification, $event->notifiable),
             'status' => 'sending',
+            'attempt' => $event->notification->getCurrentAttempt(),
         ]);
 
         return $notification;
     }
 
-    public function logSentNotification(NotificationSent $event): SentNotificationLog
+    public function logSentNotification(NotificationSent $event): ?SentNotificationLog
     {
+        if (! $event->notification instanceof ShouldLogNotification) {
+            return null;
+        }
+
         /** @var SentNotificationLog $notification */
         $notification = SentNotificationLog::updateOrCreate([
             'notification_id' => $event->notification->id,
             'channel' => $event->channel,
+            'attempt' => $event->notification->getCurrentAttempt(),
         ], [
             'notification' => get_class($event->notification),
             'notifiable' => $this->formatNotifiable($event->notifiable),
@@ -50,12 +63,17 @@ class SentNotificationLogger
         return $notification;
     }
 
-    public function logFailedNotification(NotificationFailed $event): SentNotificationLog
+    public function logFailedNotification(NotificationFailed $event): ?SentNotificationLog
     {
+        if (! $event->notification instanceof ShouldLogNotification) {
+            return null;
+        }
+
         /** @var SentNotificationLog $notification */
         $notification = SentNotificationLog::updateOrCreate([
             'notification_id' => $event->notification->id,
             'channel' => $event->channel,
+            'attempt' => $event->notification->getCurrentAttempt(),
         ], [
             'response' => $event->exception,
             'status' => 'error',

@@ -3,9 +3,13 @@
 namespace Teamnovu\LaravelNotificationLog\Tests\Support;
 
 use Illuminate\Notifications\Notification;
+use Teamnovu\LaravelNotificationLog\Concerns\LogNotification;
+use Teamnovu\LaravelNotificationLog\Contracts\ShouldLogNotification;
 
-class DummyFailingNotification extends Notification
+class DummyFailingNotification extends Notification implements ShouldLogNotification
 {
+    use LogNotification;
+
     public function __construct()
     {
         $this->id = '1234567890';
