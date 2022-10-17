@@ -7,6 +7,7 @@ use Illuminate\Notifications\Events\NotificationSending;
 use Illuminate\Notifications\Events\NotificationSent;
 use Teamnovu\LaravelNotificationLog\Loggers\SentMessageLogger;
 use Teamnovu\LaravelNotificationLog\Loggers\SentNotificationLogger;
+use Teamnovu\LaravelNotificationLog\NotificationFailed;
 
 class MessageEventListener
 {
@@ -17,7 +18,7 @@ class MessageEventListener
 
     public function handleSendingNotification(NotificationSending $event)
     {
-        if (config('notification-log.resolve-notification-message')) {
+        if (true) {
             resolve(SentNotificationLogger::class)->logSendingNotification($event);
         }
     }

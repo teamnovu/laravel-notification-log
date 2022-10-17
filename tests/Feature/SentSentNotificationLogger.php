@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 use Teamnovu\LaravelNotificationLog\Loggers\SentNotificationLogger;
+use Teamnovu\LaravelNotificationLog\Tests\Support\DummyFailingNotification;
 use Teamnovu\LaravelNotificationLog\Tests\Support\DummyNotifiable;
 use Teamnovu\LaravelNotificationLog\Tests\Support\DummyNotification;
 
@@ -14,6 +15,7 @@ it('can log a sending notification event', function () {
     $notification = new DummyNotification();
 
     $logger = new SentNotificationLogger();
+    config(['notification-log.resolve-notification-message' => true]);
     $log = $logger->logSendingNotification(new NotificationSending($notifiable, $notification, 'database'));
 
     expect($log->notification_id)->toBe($notification->id);
@@ -25,11 +27,29 @@ it('can log a sending notification event', function () {
     expect($log->status)->toBe('sending');
 });
 
+it('can log a sending notification without message when disabled', function () {
+    $notifiable = new DummyNotifiable();
+    $notification = new DummyNotification();
+
+    $logger = new SentNotificationLogger();
+    config(['notification-log.resolve-notification-message' => false]);
+    $log = $logger->logSendingNotification(new NotificationSending($notifiable, $notification, 'database'));
+
+    expect($log->notification_id)->toBe($notification->id);
+    expect($log->notification)->toBe(get_class($notification));
+    expect($log->notifiable)->toBe(get_class($notifiable).':'.implode('_', Arr::wrap($notifiable->getKey())));
+    expect($log->queued)->toBeFalse();
+    expect($log->channel)->toBe('database');
+    expect($log->message)->toBe(null);
+    expect($log->status)->toBe('sending');
+});
+
 it('can update a notification once it is sent', function () {
     $notifiable = new DummyNotifiable();
     $notification = new DummyNotification();
 
     $logger = new SentNotificationLogger();
+    config(['notification-log.resolve-notification-message' => true]);
     $logger->logSendingNotification(new NotificationSending($notifiable, $notification, 'database'));
 
     $logger->logSentNotification(new NotificationSent($notifiable, $notification, 'database', 'dummy response'));

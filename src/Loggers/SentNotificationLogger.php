@@ -66,6 +66,10 @@ class SentNotificationLogger
 
     public function resolveMessage(string $channel, Notification $notification, $notifiable)
     {
+        if (! config('notification-log.resolve-notification-message')) {
+            return null;
+        }
+
         $channelManager = resolve(ChannelManager::class);
         $channel = $channelManager->driver($channel);
 
