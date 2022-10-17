@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-notification-log` will be documented in this file.
 
+## v1.3.1 - 2022-10-17
+
+**Full Changelog**: https://github.com/teamnovu/laravel-notification-log/compare/v1.3.0...v1.3.1
+
 ## v1.3.0 - 2022-10-17
 
 ### Breaking Change
@@ -18,6 +22,7 @@ class DummyNotification extends Notification implements ShouldLogNotification
 
    // ...
 }
+
 
 ```
 **Full Changelog**: https://github.com/teamnovu/laravel-notification-log/compare/v1.2.0...v1.3.0
