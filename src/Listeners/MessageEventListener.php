@@ -18,9 +18,7 @@ class MessageEventListener
 
     public function handleSendingNotification(NotificationSending $event)
     {
-        if (true) {
-            resolve(SentNotificationLogger::class)->logSendingNotification($event);
-        }
+        resolve(SentNotificationLogger::class)->logSendingNotification($event);
     }
 
     public function handleFailedNotification(NotificationFailed $event)
