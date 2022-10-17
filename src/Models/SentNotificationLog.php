@@ -13,5 +13,6 @@ class SentNotificationLog extends Model
 
     protected $casts = [
         'queued' => 'boolean',
+        'message' => 'json',
     ];
 }
