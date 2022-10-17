@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-notification-log` will be documented in this file.
 
+## v1.2.0 - 2022-10-17
+
+### What's Changed
+
+- Add way to resolve messages of notifications for several Notification Channels like sms, telegram, webpush and so on... by @okaufmann in https://github.com/teamnovu/laravel-notification-log/pull/1
+
+### New Contributors
+
+- @okaufmann made their first contribution in https://github.com/teamnovu/laravel-notification-log/pull/1
+
+**Full Changelog**: https://github.com/teamnovu/laravel-notification-log/compare/v1.1.4...v1.2.0
+
 ## v1.1.4 - 2022-10-12
 
 **Full Changelog**: https://github.com/teamnovu/laravel-notification-log/compare/v1.1.3...v1.1.4
