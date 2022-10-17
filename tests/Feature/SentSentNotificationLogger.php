@@ -46,3 +46,25 @@ it('can update a notification once it is sent', function () {
         'status' => 'sent',
     ]);
 });
+
+it('can log a failed notification', function () {
+    $notifiable = new DummyNotifiable();
+    $notification = new DummyFailingNotification();
+
+    try {
+        $notifiable->notify($notification);
+    } catch (\Exception $e) {
+    }
+
+    assertDatabaseCount('sent_notification_logs', 1);
+    assertDatabaseHas('sent_notification_logs', [
+        'notification_id' => $notification->id,
+        'notification' => get_class($notification),
+        'notifiable' => get_class($notifiable).':'.implode('_', Arr::wrap($notifiable->getKey())),
+        'queued' => false,
+        'channel' => 'database',
+        'message' => null,
+        'status' => 'error',
+        'response' => $e,
+    ]);
+});

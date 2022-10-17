@@ -13,11 +13,13 @@ use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
 use Teamnovu\LaravelNotificationLog\Models\SentNotificationLog;
+use Teamnovu\LaravelNotificationLog\NotificationFailed;
 
 class SentNotificationLogger
 {
-    public function logSendingNotification(NotificationSending $event)
+    public function logSendingNotification(NotificationSending $event): SentNotificationLog
     {
+        /** @var SentNotificationLog $notification */
         $notification = SentNotificationLog::create([
             'notification_id' => $event->notification->id,
             'notification' => get_class($event->notification),
@@ -31,8 +33,9 @@ class SentNotificationLogger
         return $notification;
     }
 
-    public function logSentNotification(NotificationSent $event)
+    public function logSentNotification(NotificationSent $event): SentNotificationLog
     {
+        /** @var SentNotificationLog $notification */
         $notification = SentNotificationLog::updateOrCreate([
             'notification_id' => $event->notification->id,
             'channel' => $event->channel,
@@ -42,6 +45,20 @@ class SentNotificationLogger
             'queued' => in_array(ShouldQueue::class, class_implements($event->notification)),
             'response' => $this->formatResponse($event->response),
             'status' => 'sent',
+        ]);
+
+        return $notification;
+    }
+
+    public function logFailedNotification(NotificationFailed $event): SentNotificationLog
+    {
+        /** @var SentNotificationLog $notification */
+        $notification = SentNotificationLog::updateOrCreate([
+            'notification_id' => $event->notification->id,
+            'channel' => $event->channel,
+        ], [
+            'response' => $event->exception,
+            'status' => 'error',
         ]);
 
         return $notification;

@@ -22,6 +22,11 @@ class MessageEventListener
         }
     }
 
+    public function handleFailedNotification(NotificationFailed $event)
+    {
+        resolve(SentNotificationLogger::class)->logFailedNotification($event);
+    }
+
     public function handleSentMail(MessageSent $event)
     {
         resolve(SentMessageLogger::class)->logSentMessage($event);
@@ -31,6 +36,7 @@ class MessageEventListener
     {
         $events->listen(NotificationSent::class, [self::class, 'handleSentNotification']);
         $events->listen(NotificationSending::class, [self::class, 'handleSendingNotification']);
+        $events->listen(NotificationFailed::class, [self::class, 'handleFailedNotification']);
         $events->listen(MessageSent::class, [self::class, 'handleSentMail']);
     }
 }

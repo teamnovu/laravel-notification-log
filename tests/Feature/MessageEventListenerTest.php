@@ -6,7 +6,7 @@ use Teamnovu\LaravelNotificationLog\Listeners\MessageEventListener;
 use Teamnovu\LaravelNotificationLog\Tests\Support\DummyNotifiable;
 use Teamnovu\LaravelNotificationLog\Tests\Support\DummyNotification;
 
-it('can does not log a sending notification event when disabled in configuration', function () {
+it('can does not log a sending notification message when disabled in configuration', function () {
     $notifiable = new DummyNotifiable();
     $notification = new DummyNotification();
     $listener = new MessageEventListener();
@@ -14,7 +14,7 @@ it('can does not log a sending notification event when disabled in configuration
     config(['notification-log.resolve-notification-message' => false]);
     $listener->handleSendingNotification(new NotificationSending($notifiable, $notification, 'database'));
 
-    assertDatabaseCount('sent_notification_logs', 0);
+    assertDatabaseCount('sent_notification_logs', 1);
 });
 
 it('can does log a sending notification event when enabled in configuration', function () {
