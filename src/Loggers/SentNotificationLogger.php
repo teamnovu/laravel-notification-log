@@ -78,48 +78,52 @@ class SentNotificationLogger
             return null;
         }
 
-        // it the only channel anonymous notifiables are used
-        if ($channel instanceof \Illuminate\Notifications\Channels\VonageSmsChannel) {
-            $message = $notification->toVonage($notifiable);
+        try {
+            // it the only channel anonymous notifiables are used
+            if ($channel instanceof \Illuminate\Notifications\Channels\VonageSmsChannel) {
+                $message = $notification->toVonage($notifiable);
 
-            if (is_string($message)) {
-                $message = new \Illuminate\Notifications\Messages\VonageMessage($message);
+                if (is_string($message)) {
+                    $message = new \Illuminate\Notifications\Messages\VonageMessage($message);
+                }
+
+                return $message->content;
             }
 
-            return $message->content;
-        }
+            if ($notifiable instanceof AnonymousNotifiable) {
+                return null;
+            }
 
-        if ($notifiable instanceof AnonymousNotifiable) {
+            if ($channel instanceof \NotificationChannels\Telegram\TelegramChannel) {
+                $message = $notification->toTelegram($notifiable);
+                if (is_string($message)) {
+                    $message = \NotificationChannels\Telegram\TelegramMessage::create($message);
+                }
+
+                return $message->toArray();
+            }
+
+            if ($channel instanceof \NotificationChannels\WebPush\WebPushChannel) {
+                $message = $notification->toWebPush($notifiable, $notification);
+
+                return $message->toArray();
+            }
+
+            if ($channel instanceof DatabaseChannel) {
+                if (method_exists($notification, 'toDatabase')) {
+                    return is_array($data = $notification->toDatabase($notifiable))
+                        ? $data : null;
+                }
+
+                if (method_exists($notification, 'toArray')) {
+                    return $notification->toArray($notifiable);
+                }
+            }
+
+            return null;
+        } catch (\Throwable $e) {
             return null;
         }
-
-        if ($channel instanceof \NotificationChannels\Telegram\TelegramChannel) {
-            $message = $notification->toTelegram($notifiable);
-            if (is_string($message)) {
-                $message = \NotificationChannels\Telegram\TelegramMessage::create($message);
-            }
-
-            return $message->toArray();
-        }
-
-        if ($channel instanceof \NotificationChannels\WebPush\WebPushChannel) {
-            $message = $notification->toWebPush($notifiable, $notification);
-
-            return $message->toArray();
-        }
-
-        if ($channel instanceof DatabaseChannel) {
-            if (method_exists($notification, 'toDatabase')) {
-                return is_array($data = $notification->toDatabase($notifiable))
-                    ? $data : null;
-            }
-
-            if (method_exists($notification, 'toArray')) {
-                return $notification->toArray($notifiable);
-            }
-        }
-
-        return null;
     }
 
     /**
