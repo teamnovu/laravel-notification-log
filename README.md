@@ -63,7 +63,22 @@ return [
 
 ## Usage
 
-Just send a Notification or Mail as you would normally do. The package will automatically log the Notification or Mail.
+Add the following Interface and Trait to your Notification:
+
+```php
+use Teamnovu\LaravelNotificationLog\Concerns\LogNotification;
+use Teamnovu\LaravelNotificationLog\Contracts\ShouldLogNotification;
+
+class DummyNotification extends Notification implements ShouldLogNotification
+{
+    use LogNotification;
+
+    // ...
+    
+}
+```
+
+Now send a Notification or Mail as you would normally do. The package will automatically log the Notification or Mail.
 
 ## Testing
 
