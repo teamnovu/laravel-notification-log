@@ -3,6 +3,7 @@
 namespace Teamnovu\LaravelNotificationLog\Tests\Support;
 
 use Illuminate\Notifications\Notification;
+use Ramsey\Uuid\Uuid;
 use Teamnovu\LaravelNotificationLog\Concerns\LogNotification;
 use Teamnovu\LaravelNotificationLog\Contracts\ShouldLogNotification;
 
@@ -12,7 +13,7 @@ class DummyNotification extends Notification implements ShouldLogNotification
 
     public function __construct()
     {
-        $this->id = '1234567890';
+        $this->id = (string) Uuid::uuid4();
     }
 
     public function via($notifiable)
