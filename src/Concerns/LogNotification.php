@@ -21,8 +21,6 @@ trait LogNotification
             $attempt = $this->getCurrentAttempt() + 1;
         }
 
-        ray(self::$attempt, $this->id);
-
         self::$attempt[$this->id] = $attempt;
     }
 }
