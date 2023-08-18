@@ -161,7 +161,6 @@ class SentNotificationLogger
      * Format the given notifiable into a tag.
      *
      * @param  mixed  $notifiable
-     * @return string
      */
     private function formatNotifiable($notifiable): string
     {

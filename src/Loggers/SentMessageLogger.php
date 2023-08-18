@@ -62,7 +62,6 @@ class SentMessageLogger
 
     /**
      * @param  DataPart[]  $getAttachments
-     * @return array
      */
     protected function listAttachments(array $getAttachments): array
     {
@@ -75,8 +74,6 @@ class SentMessageLogger
 
     /**
      * Get the name of the mailable.
-     *
-     * @param  \Illuminate\Mail\Events\MessageSent  $event
      */
     protected function getMailable(MessageSent $event): array
     {
@@ -90,7 +87,6 @@ class SentMessageLogger
     /**
      * Determine whether the mailable was queued.
      *
-     * @param  \Illuminate\Mail\Events\MessageSent  $event
      * @return bool
      */
     protected function getQueuedStatus(MessageSent $event)

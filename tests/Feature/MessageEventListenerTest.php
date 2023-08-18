@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Notifications\Events\NotificationSending;
-use function Pest\Laravel\assertDatabaseCount;
 use Teamnovu\LaravelNotificationLog\Listeners\MessageEventListener;
 use Teamnovu\LaravelNotificationLog\Tests\Support\DummyNotifiable;
 use Teamnovu\LaravelNotificationLog\Tests\Support\DummyNotification;
+
+use function Pest\Laravel\assertDatabaseCount;
 
 it('can does not log a sending notification message when disabled in configuration', function () {
     $notifiable = new DummyNotifiable();

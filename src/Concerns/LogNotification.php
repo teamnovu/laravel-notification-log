@@ -15,7 +15,7 @@ trait LogNotification
         return 0;
     }
 
-    public function setCurrentAttempt(?int $attempt = null): void
+    public function setCurrentAttempt(int $attempt = null): void
     {
         if ($attempt === null) {
             $attempt = $this->getCurrentAttempt() + 1;
