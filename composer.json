@@ -18,8 +18,9 @@
     "require": {
         "php": "^8.1",
         "ext-zlib": "*",
-        "spatie/laravel-package-tools": "^1.13.0",
-        "illuminate/contracts": "^9.0|^10.0"
+        "illuminate/contracts": "^9.0|^10.0",
+        "nesbot/carbon": "^2.64",
+        "spatie/laravel-package-tools": "^1.13.0"
     },
     "require-dev": {
         "laravel-notification-channels/telegram": "^3.0|^4.0",
