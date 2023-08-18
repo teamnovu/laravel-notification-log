@@ -39,15 +39,16 @@ class SentNotificationLogger
         }
 
         /** @var SentNotificationLog $notification */
-        $notification = SentNotificationLog::create([
+        $notification = SentNotificationLog::updateOrCreate([
             'notification_id' => $event->notification->id,
+            'channel' => $event->channel,
+            'attempt' => $event->notification->getCurrentAttempt(),
+        ], [
             'notification' => get_class($event->notification),
             'notifiable' => $this->formatNotifiable($event->notifiable),
             'queued' => in_array(ShouldQueue::class, class_implements($event->notification)),
-            'channel' => $event->channel,
             'message' => $this->resolveMessage($event->channel, $event->notification, $event->notifiable),
             'status' => 'sending',
-            'attempt' => $event->notification->getCurrentAttempt(),
         ]);
 
         return $notification;
