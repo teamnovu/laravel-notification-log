@@ -29,7 +29,7 @@ class ChannelManager extends BaseChannelManager
      * @param  mixed  $notification
      * @return void
      */
-    public function sendNow($notifiables, $notification, array $channels = null)
+    public function sendNow($notifiables, $notification, ?array $channels = null)
     {
         (new NotificationSender(
             $this, $this->container->make(Bus::class), $this->container->make(Dispatcher::class), $this->locale)
