@@ -12,10 +12,10 @@ use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 
 it('can log a sending notification event', function () {
-    $notifiable = new DummyNotifiable();
-    $notification = new DummyNotification();
+    $notifiable = new DummyNotifiable;
+    $notification = new DummyNotification;
 
-    $logger = new SentNotificationLogger();
+    $logger = new SentNotificationLogger;
     config(['notification-log.resolve-notification-message' => true]);
     $log = $logger->logSendingNotification(new NotificationSending($notifiable, $notification, 'database'));
 
@@ -30,10 +30,10 @@ it('can log a sending notification event', function () {
 });
 
 it('can log a sending notification without message when disabled', function () {
-    $notifiable = new DummyNotifiable();
-    $notification = new DummyNotification();
+    $notifiable = new DummyNotifiable;
+    $notification = new DummyNotification;
 
-    $logger = new SentNotificationLogger();
+    $logger = new SentNotificationLogger;
     config(['notification-log.resolve-notification-message' => false]);
     $log = $logger->logSendingNotification(new NotificationSending($notifiable, $notification, 'database'));
 
@@ -48,10 +48,10 @@ it('can log a sending notification without message when disabled', function () {
 });
 
 it('can update a notification once it is sent', function () {
-    $notifiable = new DummyNotifiable();
-    $notification = new DummyNotification();
+    $notifiable = new DummyNotifiable;
+    $notification = new DummyNotification;
 
-    $logger = new SentNotificationLogger();
+    $logger = new SentNotificationLogger;
     config(['notification-log.resolve-notification-message' => true]);
     $logger->logSendingNotification(new NotificationSending($notifiable, $notification, 'database'));
 
@@ -72,8 +72,8 @@ it('can update a notification once it is sent', function () {
 });
 
 it('can log a failed notification', function () {
-    $notifiable = new DummyNotifiable();
-    $notification = new DummyFailingNotification();
+    $notifiable = new DummyNotifiable;
+    $notification = new DummyFailingNotification;
 
     try {
         $notifiable->notify($notification);
