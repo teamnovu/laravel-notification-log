@@ -14,6 +14,5 @@ class NotificationFailed
         public $notification,
         public $channel,
         public $exception
-    ) {
-    }
+    ) {}
 }
