@@ -112,7 +112,7 @@ it('can log a failed notification', function () {
         'message' => null,
         'status' => NotificationDeliveryStatus::FAILED,
         'data' => json_encode([
-            'message' => 'Notification could not be sent!',
+            'exception' => new \stdClass,
         ], JSON_THROW_ON_ERROR),
         'attempt' => 1,
         'sent_at' => null,
