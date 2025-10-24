@@ -12,6 +12,7 @@ use Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotification;
 use Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotificationResendable;
 use Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotificationViaTestChannel;
 use Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotificationWithExtraData;
+
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\freezeTime;
