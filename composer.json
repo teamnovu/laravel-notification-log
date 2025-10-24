@@ -30,11 +30,11 @@
         "laravel/pint": "^1.0",
         "laravel/slack-notification-channel": "^3.2",
         "laravel/vonage-notification-channel": "^3.0",
-        "orchestra/testbench": "^9.0|^10.0",
+        "orchestra/testbench": "^9.0|^10.6",
         "pestphp/pest": "^4.0",
         "pestphp/pest-plugin-laravel": "^4.0",
         "phpstan/extension-installer": "^1.4",
-        "phpunit/phpunit": "^12.0",
+        "phpunit/phpunit": "^12.1",
         "spatie/laravel-ray": "^1.40",
         "spatie/test-time": "^1.3"
     },
