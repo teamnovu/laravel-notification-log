@@ -20,6 +20,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use JsonSerializable;
 use Okaufmann\LaravelNotificationLog\Contracts\ResendableNotification;
+use Okaufmann\LaravelNotificationLog\Contracts\ResolveMessageForLogging;
 use Okaufmann\LaravelNotificationLog\Contracts\ShouldLogNotification;
 use Okaufmann\LaravelNotificationLog\Models\SentNotificationLog;
 use Okaufmann\LaravelNotificationLog\NotificationDeliveryStatus;
@@ -193,6 +194,12 @@ class NotificationLogger
         $channel = $channelManager->driver($channel);
 
         try {
+            if ($notification instanceof ResolveMessageForLogging) {
+                $message = $notification->resolveMessageForLogging($channel, $notifiable);
+
+                return $message;
+            }
+
             if ($channel instanceof MailChannel) {
                 $message = $notification->toMail($notifiable);
 
