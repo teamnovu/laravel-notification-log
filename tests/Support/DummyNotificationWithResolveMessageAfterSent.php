@@ -8,7 +8,7 @@ use Okaufmann\LaravelNotificationLog\Contracts\ResolveMessageForLoggingAfterSent
 use Okaufmann\LaravelNotificationLog\Contracts\ShouldLogNotification;
 use Ramsey\Uuid\Uuid;
 
-class DummyNotificationWithResolveMessageAfterSent extends Notification implements ShouldLogNotification, ResolveMessageForLoggingAfterSent
+class DummyNotificationWithResolveMessageAfterSent extends Notification implements ResolveMessageForLoggingAfterSent, ShouldLogNotification
 {
     private int $currentAttempt = 1;
 

@@ -9,9 +9,9 @@ use Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotificationWithResolveM
 use Okaufmann\LaravelNotificationLog\Tests\Support\TestUser;
 
 beforeEach(function () {
-    $this->logger = new NotificationLogger();
+    $this->logger = new NotificationLogger;
     $this->user = TestUser::factory()->create();
-    $this->notification = new DummyNotificationWithResolveMessageAfterSent();
+    $this->notification = new DummyNotificationWithResolveMessageAfterSent;
 });
 
 it('resolves message after sending when notification implements ResolveMessageForLoggingAfterSent', function () {
@@ -43,7 +43,7 @@ it('resolves message after sending when notification implements ResolveMessageFo
 });
 
 it('does not update message if notification does not implement ResolveMessageForLoggingAfterSent', function () {
-    $notification = new \Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotification();
+    $notification = new \Okaufmann\LaravelNotificationLog\Tests\Support\DummyNotification;
 
     // First, log the sending notification
     $sendingEvent = new NotificationSending(
