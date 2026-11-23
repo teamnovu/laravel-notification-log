@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('sent_message_logs', function (Blueprint $table) {
             $table->id();
 
-            $table->string('message_id');
+            $table->string('message_id')->index('sent_message_logs_message_id_index');
             $table->json('mailable')->nullable();
             $table->boolean('queued')->default(false);
             $table->json('to')->nullable();
