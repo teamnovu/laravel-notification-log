@@ -16,22 +16,22 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.4",
         "ext-zlib": "*",
-        "illuminate/contracts": "^9.0|^10.0|^11.0",
-        "nesbot/carbon": "^2.64",
+        "illuminate/contracts": "^12.0|^13.0",
+        "nesbot/carbon": "^3.0",
         "spatie/laravel-package-tools": "^1.13.0"
     },
     "require-dev": {
-        "laravel-notification-channels/telegram": "^3.0|^4.0",
-        "laravel-notification-channels/webpush": "^7.0",
+        "laravel-notification-channels/telegram": "^6.0|^7.0|^8.0",
+        "laravel-notification-channels/webpush": "^10.0|^11.0|^12.0|^13.0",
         "laravel/pint": "^1.0",
         "laravel/vonage-notification-channel": "^3.0",
-        "nunomaduro/collision": "^6.0",
-        "orchestra/testbench": "^7.0",
-        "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-laravel": "^1.1",
-        "phpunit/phpunit": "^9.5",
+        "nunomaduro/collision": "^8.0",
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "phpunit/phpunit": "^12.0",
         "spatie/laravel-ray": "^1.26"
     },
     "autoload": {
@@ -51,7 +51,7 @@
     "scripts": {
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
+        "test-coverage": "vendor/bin/pest --coverage --coverage-html=build/coverage --coverage-text=build/coverage.txt --coverage-clover=build/logs/clover.xml",
         "format": "vendor/bin/pint"
     },
     "config": {
