@@ -25,7 +25,7 @@ class LaravelNotificationLogServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-notification-log')
             ->hasConfigFile()
-            //->hasViews()
+            // ->hasViews()
             ->hasMigrations(['create_sent_notification_logs_table', 'create_sent_message_logs_table'])
             ->hasCommands([
                 CompressAllMessages::class,

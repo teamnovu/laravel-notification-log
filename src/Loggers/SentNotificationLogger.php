@@ -8,10 +8,15 @@ use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Notifications\Channels\DatabaseChannel;
 use Illuminate\Notifications\Channels\MailChannel;
+use Illuminate\Notifications\Channels\VonageSmsChannel;
 use Illuminate\Notifications\Events\NotificationSending;
 use Illuminate\Notifications\Events\NotificationSent;
+use Illuminate\Notifications\Messages\VonageMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
+use NotificationChannels\Telegram\TelegramChannel;
+use NotificationChannels\Telegram\TelegramMessage;
+use NotificationChannels\WebPush\WebPushChannel;
 use Teamnovu\LaravelNotificationLog\Contracts\ShouldLogNotification;
 use Teamnovu\LaravelNotificationLog\Models\SentNotificationLog;
 use Teamnovu\LaravelNotificationLog\NotificationFailed;
@@ -111,11 +116,11 @@ class SentNotificationLogger
 
         try {
             // it the only channel anonymous notifiables are used
-            if ($channel instanceof \Illuminate\Notifications\Channels\VonageSmsChannel) {
+            if ($channel instanceof VonageSmsChannel) {
                 $message = $notification->toVonage($notifiable);
 
                 if (is_string($message)) {
-                    $message = new \Illuminate\Notifications\Messages\VonageMessage($message);
+                    $message = new VonageMessage($message);
                 }
 
                 return $message->content;
@@ -125,16 +130,16 @@ class SentNotificationLogger
                 return null;
             }
 
-            if ($channel instanceof \NotificationChannels\Telegram\TelegramChannel) {
+            if ($channel instanceof TelegramChannel) {
                 $message = $notification->toTelegram($notifiable);
                 if (is_string($message)) {
-                    $message = \NotificationChannels\Telegram\TelegramMessage::create($message);
+                    $message = TelegramMessage::create($message);
                 }
 
                 return $message->toArray();
             }
 
-            if ($channel instanceof \NotificationChannels\WebPush\WebPushChannel) {
+            if ($channel instanceof WebPushChannel) {
                 $message = $notification->toWebPush($notifiable, $notification);
 
                 return $message->toArray();
