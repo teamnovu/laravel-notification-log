@@ -5,13 +5,14 @@ namespace Teamnovu\LaravelNotificationLog\Notifications;
 use Illuminate\Contracts\Bus\Dispatcher as Bus;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Notifications\ChannelManager as BaseChannelManager;
+use Illuminate\Support\Collection;
 
 class ChannelManager extends BaseChannelManager
 {
     /**
      * Send the given notification to the given notifiable entities.
      *
-     * @param  \Illuminate\Support\Collection|array|mixed  $notifiables
+     * @param  Collection|array|mixed  $notifiables
      * @param  mixed  $notification
      * @return void
      */
@@ -25,7 +26,7 @@ class ChannelManager extends BaseChannelManager
     /**
      * Send the given notification immediately.
      *
-     * @param  \Illuminate\Support\Collection|array|mixed  $notifiables
+     * @param  Collection|array|mixed  $notifiables
      * @param  mixed  $notification
      * @return void
      */
