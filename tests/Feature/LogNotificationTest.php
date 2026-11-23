@@ -3,14 +3,14 @@
 use Teamnovu\LaravelNotificationLog\Tests\Support\DummyNotification;
 
 it('can get the current attempt', function () {
-    $notification = new DummyNotification();
+    $notification = new DummyNotification;
 
     expect($notification->getCurrentAttempt())->toBe(0);
 });
 
 it('can change the current attempt', function () {
-    $notification = new DummyNotification();
-    $notification2 = new DummyNotification();
+    $notification = new DummyNotification;
+    $notification2 = new DummyNotification;
 
     expect($notification->getCurrentAttempt())->toBe(0)
         ->and($notification2->getCurrentAttempt())->toBe(0);
