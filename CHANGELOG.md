@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-notification-log` will be documented in this file.
 
+## v3.0.0 - 2026-11-23
+
+Support for Laravel 12 and 13, and PHP 8.4+.
+
 ## v2.0.0 - 2023-08-18
 
 **Full Changelog**: https://github.com/teamnovu/laravel-notification-log/compare/v1.3.3...v2.0.0
@@ -34,6 +38,7 @@ class DummyNotification extends Notification implements ShouldLogNotification
 
    // ...
 }
+
 
 
 
